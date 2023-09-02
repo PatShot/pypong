@@ -1,0 +1,10 @@
+{
+    "HEIGHT": 600,
+    "WIDTH": 480,
+    "FPS": 60,
+    "TOP_BOUND": 0.2,
+    "BOTTOM_BOUND": 1.0,
+    "SMASH_ACTIVE": 1,
+    "CPU_PADDLE_START": [0.45, 0.25],
+    "USER_PADDLE_START": [0.45, 0.95]
+}
