@@ -156,3 +156,6 @@ cython_debug/
 
 # VSCODE
 .vscode
+
+# Environment Activation Shell Script
+act.sh
