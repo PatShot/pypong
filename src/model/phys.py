@@ -1,10 +1,19 @@
 import pygame
 from dataclasses import dataclass
-
+import math
 from src.objects import Paddle, Puck
 from src.settings import HEIGHT, WIDTH, TOP_BOUND
 from .events import post_event
-from .types import Events, GameObject
+from .types import GameObject
+
+def kinetic_energy(vel: float, mass: float = 1.0):
+    return 0.5*mass*vel*vel
+
+def vector_inner_product(vector: list[float]):
+    return math.sqrt(sum([x*x for x in vector]))
+
+def kinetic_energy_vectors(vel: list[float], mass: float = 1.0):
+    return kinetic_energy(vector_inner_product(vel))
 
 def border_collide(object: GameObject) -> list[float]:
     '''Returns: [new_position, new_velocity]'''

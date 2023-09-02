@@ -44,8 +44,3 @@ class FontObject(Protocol):
 
     def update_position(self, pos: list[int]) -> None:
         ...
-
-
-class Events(Enum):
-    OUT_OF_BOUNDS: auto()
-    SCORED : auto()

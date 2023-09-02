@@ -2,12 +2,14 @@ import math
 from random import random
 from src.objects import Puck, Paddle, TextDisplay
 from src.clock import TickingClock
-from .score_listen import setup_score_handler
 from src.model.events import post_event, subscribe
 from src.model.types import GameObject, FontObject
 from src.control.listeners import setup_full_time_listener
 from src.ai.simple_ai import simple_ai
 from src.model.phys import (
+    kinetic_energy,
+    vector_inner_product,
+    kinetic_energy_vectors,
     move_object,
     signs_flipped, 
     border_collide, 
@@ -22,6 +24,7 @@ import pygame
 CLOCK_POS = [60, 80]
 BOUNCE_POS = [380, 80]
 SHOW_VEL_POS = [270, 80]
+KINETIC_ENERGY = [60, 20]
 
 PUCK_POS = [220.0, 300.0]
 PUCK_VEL = [round(random()*1.5, 2), 3.0]
@@ -105,17 +108,22 @@ class Game():
         self.register_font(score_text)
         puck_speed = TextDisplay(text_fn=self.show_puck_speed, position=CLOCK_POS, size = 16)
         self.register_font(puck_speed)
+        puck_ener  = TextDisplay(text_fn=self.show_kinetic_ener, position=KINETIC_ENERGY, size=16)
+        self.register_font(puck_ener)
 
+        # For testing Only
         # PUCK_POS = [
         #     (0.21*self.canvas_x + random()*0.56*self.canvas_x),
         #     (0.21*self.canvas_y + random()*0.57*self.canvas_y)]
+        PUCK_VEL = [round(random()*1.5, 2), 3.0]
         puck = Puck(PUCK_POS, PUCK_VEL)
         self.register_object(puck)
 
-        PAD1_POS = [
-            (self.canvas_x//2  - 25),
-            0.95*self.canvas_y
-        ]
+        # For testing Only
+        # PAD1_POS = [
+        #     (self.canvas_x//2  - 25),
+        #     0.95*self.canvas_y
+        # ]
         paddle1 = Paddle(USER_PADDLE_START, max_history_len=self.FPS)
         self.register_user_object(paddle1)
         paddle2 = Paddle(CPU_PADDLE_START, max_history_len=self.FPS)
@@ -156,7 +164,7 @@ class Game():
         if not self.ball_objects:
             return
         
-        if self.time %15 == 0:
+        if self.time %10 == 0:
             obs_gstate = self.push_ai_gamestate()
             simple_ai(gamestate=obs_gstate)
         # Maybe, I'll have multiple balls.
@@ -202,6 +210,12 @@ class Game():
         vy = self.game_state['ball_vy']
         return f"{vx:.2f}x + {vy:.2f}y = {vel:.2f}"
     
+    def show_kinetic_ener(self):
+        
+        vx = self.game_state['ball_vx']
+        vy = self.game_state['ball_vy']
+        return f"{kinetic_energy_vectors(vel = [vx, vy]):.2f}"
+    
     def ball_ctrl_object_collision(self, ball_object:GameObject, ctrl_object: Paddle, player: str, Thresh: int = 9):
         ctrl_object.record_pos()
         if 0.35*self.canvas_y < ball_object.position[1] < 0.8 * self.canvas_y:
@@ -242,7 +256,7 @@ class Game():
         cpu_score = self.game_state['CPU']['score']
         if user_score == 11:
             post_event("USER_WINS", "")
-        if cpu_score == 3:
+        if cpu_score == 11:
             post_event("USER_LOST", "")
     
     def usr_smash_handler(self, player):

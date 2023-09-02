@@ -1,6 +1,4 @@
 # observer
-from src.model.types import Events
-
 subscribers = dict()
 
 def subscribe(event_type, fn):

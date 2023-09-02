@@ -28,7 +28,7 @@ class Puck(GameObject):
     def get_width(self) -> int:
         return self.width
     
-    def update_position(self, pos: list[int]) -> None:
+    def update_position(self, pos: list[float]) -> None:
         self.position = pos
 
     def update_velocity(self, vel: list[float]) -> None:
