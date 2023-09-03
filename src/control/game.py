@@ -4,7 +4,10 @@ from src.objects import Puck, Paddle, TextDisplay
 from src.clock import TickingClock
 from src.model.events import post_event, subscribe
 from src.model.types import GameObject, FontObject
-from src.control.listeners import setup_full_time_listener
+from src.control.listeners import (
+    setup_full_time_listener,
+    setup_paddle_hit_listener
+)
 from src.ai.simple_ai import simple_ai
 from src.model.phys import (
     kinetic_energy,
@@ -100,6 +103,9 @@ class Game():
 
     def get_score(self, player):
         return self.game_state[player]['score']
+    
+    def on_paddle_hit(self, player):
+        self.game_state[player]['last_paddle_hit'] =  player
 
     def declare_objects(self):
         # clk = TickingClock(CLOCK_POS)
@@ -283,6 +289,7 @@ class Game():
         subscribe("UP_SCORE", self.update_score)
         subscribe("UP_SCORE", self.handle_reset)
         subscribe("RESET_DONE", self.win_condition)
+        setup_paddle_hit_listener(self.on_paddle_hit)
     
     def handle_key_event(self, keys: dict):
         if keys[pygame.K_LEFT]:
