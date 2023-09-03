@@ -230,6 +230,7 @@ class Game():
         ball_object.update_velocity(v_after_coll)
         new_pos = move_object(ball_object, 3)
         ball_object.update_position(new_pos)
+        post_event("PADDLE_HIT", player)
 
     def push_ai_gamestate(self) -> dict:
         obs_gamestate = {

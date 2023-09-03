@@ -27,3 +27,6 @@ def setup_win_condition(fn):
 
 def setup_loss_condition(fn):
     subscribe("USER_LOST", fn)
+
+def setup_paddle_hit_listener(fn):
+    subscribe("PADDLE_HIT", fn)

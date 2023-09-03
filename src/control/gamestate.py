@@ -13,7 +13,8 @@ fresh_gamestate = {
     },
     "ball_vx": 0.0,
     "ball_vy": 0.0,
-    "ball_velocity": 0.0
+    "ball_velocity": 0.0,
+    "last_paddle_hit": None
 }
 
 timestate = {
