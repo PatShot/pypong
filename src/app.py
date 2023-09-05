@@ -18,8 +18,8 @@ PUCK_VEL = (5.0, 10.0)
 class App():
     def __init__(self) -> None:
         self._running: bool = True
-        self.screen = None
-        self.clock: pygame.time.Clock = None
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.HWSURFACE)
+        self.clock = pygame.time.Clock()
         self.size = (WIDTH, HEIGHT)
         self.game = Game(self.size, FPS=FPS)
 
@@ -36,8 +36,6 @@ class App():
 
     def on_init(self) -> None:
         pygame.init()
-        self.screen = pygame.display.set_mode(self.size, pygame.HWSURFACE)
-        self.clock = pygame.time.Clock()
         self._running = True
         # subscribe("RESET_DONE", self.time_event)
         setup_win_condition(self.on_win)

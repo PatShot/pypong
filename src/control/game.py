@@ -152,21 +152,18 @@ class Game():
         print(f"resetting for {data}")
         self.reset_game()
     
-    def check_events(self):
-        if self.game_state['USER']['smash_flag'] and (self.time >= self.game_state['USER']['smash_active']):
-            self.game_state['USER']['smash_flag'] = False
-            self.game_state['USER']['alpha'] = 1.00
-            print("Deactivated Smash state.")
-        if self.game_state['CPU']['smash_flag'] and (self.time >= self.game_state['CPU']['smash_active']):
-            self.game_state['CPU']['smash_flag'] = False
-            self.game_state['CPU']['alpha'] = 1.00
+    def check_events(self, player: str):
+        if self.game_state[player]['smash_flag'] and (self.time >= self.game_state[player]['smash_active']):
+            self.game_state[player]['smash_flag'] = False
+            self.game_state[player]['alpha'] = 1.00
             print("Deactivated Smash state.")
     
     def update_positions(self):
         self.time += 1
         if self.time < self.FPS*2:
             return
-        self.check_events()
+        self.check_events(player="USER")
+        self.check_events(player="CPU")
         if not self.ball_objects:
             return
         

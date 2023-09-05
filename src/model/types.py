@@ -36,8 +36,9 @@ class FontObject(Protocol):
     position: list[int]
     size: int
 
-    def render(self):
+    def render(self) -> SurfaceType:
         """return the surface with font rendered"""
+        ...
 
     def get_position(self) -> list[int]:
         ... 
