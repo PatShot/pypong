@@ -13,7 +13,7 @@ def vector_inner_product(vector: list[float]):
     return math.sqrt(sum([x*x for x in vector]))
 
 def kinetic_energy_vectors(vel: list[float], mass: float = 1.0):
-    return kinetic_energy(vector_inner_product(vel))
+    return kinetic_energy(vector_inner_product(vel), mass=mass)
 
 def border_collide(object: GameObject) -> list[float]:
     '''Returns: [new_position, new_velocity]'''

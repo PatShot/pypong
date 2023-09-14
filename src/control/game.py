@@ -206,8 +206,8 @@ class Game():
     def find_puck_speed(self, vel: list[float]):
         vx = vel[0],
         vy = vel[1],
-        self.game_state['ball_vx'] = abs(vx[0])
-        self.game_state['ball_vy'] = abs(vy[0])
+        self.game_state['ball_vx'] = vx[0]
+        self.game_state['ball_vy'] = vy[0]
         self.game_state['ball_velocity'] = abs(math.sqrt(sum([x**2 for x in vel])))
  
     def show_puck_speed(self):

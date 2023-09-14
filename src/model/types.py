@@ -2,6 +2,7 @@ from pygame import SurfaceType
 from pygame.rect import RectType
 from typing import Protocol
 from enum import Enum, auto
+from abc import ABC, abstractmethod
 
 class GameObject(Protocol):
     position : list[float]
@@ -44,3 +45,16 @@ class FontObject(Protocol):
 
     def update_position(self, pos: list[int]) -> None:
         ...
+
+class Player(ABC):
+    player: str
+    events: list
+    @abstractmethod
+    def read_gamestate(self, gamestate: dict):
+        '''read gamestate'''
+
+    def player_events(self, add_event):
+        '''add event to listen'''
+
+    def rectangle(self) -> None:
+        '''return rectangle to pygame'''
